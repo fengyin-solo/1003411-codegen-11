@@ -22,6 +22,7 @@
       <span v-for="item in statusSummary" :key="item.status" class="legend-item">
         {{ item.status }}：{{ item.count }}
       </span>
+      <span class="legend-item co-item">宣传活动协办（归档联动）：{{ assistCount }}</span>
     </p>
 
     <form class="filter-bar" @submit.prevent="reload">
@@ -97,6 +98,10 @@ const statusSummary = computed(() =>
     status,
     count: rows.value.filter((row) => String(row.status) === status).length,
   })),
+)
+// 宣传活动归档时联动写进来的协办台账，按「协办活动编号」标记识别。
+const assistCount = computed(
+  () => rows.value.filter((row) => String(row['协办活动编号'] ?? '') !== '').length,
 )
 
 function resetFilters() {
